@@ -1,0 +1,38 @@
+:host {
+  display: block;
+}
+
+div {
+  display: block;
+  width: fit-content;
+
+  padding: 0.25rem 0.5rem;
+
+  border-radius: 0.25rem;
+
+  font-family: OpenSans;
+  font-size: 0.75rem;
+  font-weight: 400;
+  text-align: center;
+  text-transform: capitalize;
+}
+
+.low {
+  background-color: #E9F7EB;
+  color: #069D1F;
+}
+
+.medium {
+  background-color: #FFF9F5;
+  color: #E06C00;
+}
+
+.high {
+  background-color: #FBF1F2;
+  color: #D53949;
+}
+
+.critical {
+  background-color: #F4EAFB;
+  color: #9842D1;
+}

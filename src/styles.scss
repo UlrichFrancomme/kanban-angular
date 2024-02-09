@@ -1,1 +1,26 @@
 /* You can add global styles to this file, and also import other style files */
+@font-face {
+  font-family: Inconsolata;
+  src: url(assets/Inconsolata.ttf);
+  font-weight: 200 900;
+  font-style: normal;
+  font-stretch: 50% 200%;
+}
+
+@font-face {
+  font-family: OpenSans;
+  src: url(assets/Inconsolata.ttf);
+  font-weight: 300 800;
+  font-style: normal;
+  font-stretch: 75% 125%;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+}
