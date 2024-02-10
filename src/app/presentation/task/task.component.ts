@@ -38,6 +38,7 @@ export class TaskComponent {
     this.menuService.openMenu(this.task.id, {
       top: viewportOffset?.top ?? 0,
       left: viewportOffset?.left ?? 0,
+      right: viewportOffset?.right ?? 0,
     });
   }
 

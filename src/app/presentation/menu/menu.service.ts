@@ -11,6 +11,7 @@ import { MenuComponent } from './menu.component';
 type Position = {
   top: number;
   left: number;
+  right: number;
 };
 
 @Injectable({ providedIn: 'root' })
@@ -54,13 +55,31 @@ export class MenuService {
 
     this.menuInstance = this.hostContainerRef?.createComponent(MenuComponent);
     this.menuInstance.instance.taskId = taskId;
-    const element = this.menuInstance.location.nativeElement;
-    this.renderer.setStyle(element, 'top', `${position.top}px`);
-    this.renderer.setStyle(element, 'left', `${position.left}px`);
+
+    this.setMenuPosition(position);
   }
 
   closeMenu() {
     this.menuInstance?.destroy();
     this.menuInstance = undefined;
+  }
+
+  private setMenuPosition(position: Position): void {
+    if (!this.menuInstance) {
+      return;
+    }
+
+    const element: HTMLElement = this.menuInstance.location.nativeElement;
+
+    this.renderer.setStyle(element, 'top', `${position.top}px`);
+
+    const viewportWidth = document.documentElement.clientWidth;
+    const elementWidth = element.clientWidth;
+
+    if (position.left + elementWidth > viewportWidth) {
+      this.renderer.setStyle(element, 'right', `${viewportWidth - position.right}px`);
+    } else {
+      this.renderer.setStyle(element, 'left', `${position.left}px`);
+    }
   }
 }
