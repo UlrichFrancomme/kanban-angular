@@ -64,16 +64,6 @@ export class TasksStore {
     });
   }
 
-  changeTaskOrder(taskId: string, status: Status): void {
-    this.tasks.update((tasks) => {
-      const foundTask = tasks.find((task) => task.id === taskId);
-      if (foundTask) {
-        foundTask.status = status;
-      }
-      return tasks;
-    });
-  }
-
   addTask(task: Omit<Task, 'id'>): void {
     this.tasks.update((tasks) => [
       ...tasks,
@@ -82,5 +72,16 @@ export class TasksStore {
         ...task,
       },
     ]);
+  }
+
+  deleteTask(taskId: string): void {
+    this.tasks.update((tasks) => {
+      const taskIndex = tasks.findIndex((item) => item.id === taskId);
+      if (taskIndex !== -1) {
+        return tasks.toSpliced(taskIndex, 1);
+      }
+
+      return tasks;
+    });
   }
 }

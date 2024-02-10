@@ -1,4 +1,6 @@
 :host {
+  position: relative;
+
   display: block;
   width: 26.25rem;
 
@@ -8,8 +10,23 @@
   border-radius: 1rem;
 }
 
-app-priority {
-  margin-bottom: 0.5rem;
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  app-priority {
+    margin-bottom: 0.5rem;
+  }
+
+  .menu-trigger {
+    width: 1.75rem;
+    height: 1.75rem;
+
+    color: #50505a;
+
+    cursor: pointer;
+  }
 }
 
 .title {

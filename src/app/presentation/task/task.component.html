@@ -1,3 +1,6 @@
-<app-priority [priority]="task.priority"></app-priority>
+<header>
+  <app-priority [priority]="task.priority"></app-priority>
+  <app-icon #trigger class="menu-trigger" icon="menu" (click)="triggerMenu()"></app-icon>
+</header>
 <div class="title">{{ task.title }}</div>
 <app-author [author]="task.author"></app-author>

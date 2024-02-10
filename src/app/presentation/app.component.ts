@@ -1,14 +1,13 @@
-import { CdkDropListGroup } from '@angular/cdk/drag-drop';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
-import { ColumnComponent } from './column/column.component';
+import { BoardComponent } from './board/board.component';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
   standalone: true,
-  imports: [CdkDropListGroup, ColumnComponent],
+  imports: [BoardComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent {}
