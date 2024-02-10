@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { Priority } from '../../core/task';
+import { Priority } from 'src/app/core/task';
 
 @Component({
   selector: 'app-priority',

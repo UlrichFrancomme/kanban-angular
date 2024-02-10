@@ -1,10 +1,10 @@
 import { CdkDragDrop, DragDropModule } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input, Signal, signal } from '@angular/core';
-import { Status, Task } from '../core/task';
-import { TaskComponent } from '../task/task.component';
-import { TasksStore } from '../core/tasks.store';
+import { Status, Task } from '../../core/task';
+import { TasksStore } from '../../core/tasks.store';
 import { faker } from '@faker-js/faker';
+import { TaskComponent } from '../task/task.component';
 import { EditableTaskComponent } from '../editable-task/editable-task.component';
 
 

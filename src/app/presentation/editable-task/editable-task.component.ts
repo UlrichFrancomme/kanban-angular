@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, EventEmitter, HostListener, Output, ViewChild, signal } from '@angular/core';
-import { Priority, Task } from '../core/task';
+import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Output, ViewChild, signal } from '@angular/core';
 import { PriorityComponent } from '../task/priority/priority.component';
 import { IconComponent } from '../icon/icon.component';
+import { Priority, Task } from 'src/app/core/task';
 
 
 @Component({
