@@ -1,13 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, HostBinding, computed, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, HostBinding, input } from '@angular/core';
 import { Author } from 'src/app/core/task';
 
 @Component({
   selector: 'app-author',
   standalone: true,
-  imports: [
-    CommonModule,
-  ],
+  imports: [CommonModule],
   template: `{{ initial() }}`,
   styleUrl: './author.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

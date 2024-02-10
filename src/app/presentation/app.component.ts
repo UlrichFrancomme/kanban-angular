@@ -1,8 +1,7 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
-import { TaskComponent } from './task/task.component';
-import { ColumnComponent } from './column/column.component';
-
 import { CdkDropListGroup } from '@angular/cdk/drag-drop';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+
+import { ColumnComponent } from './column/column.component';
 
 @Component({
   selector: 'app-root',
@@ -12,6 +11,4 @@ import { CdkDropListGroup } from '@angular/cdk/drag-drop';
   imports: [CdkDropListGroup, ColumnComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AppComponent {
-
-}
+export class AppComponent {}

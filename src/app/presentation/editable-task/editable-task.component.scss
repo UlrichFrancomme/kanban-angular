@@ -27,7 +27,7 @@ app-priority {
   font-size: 1.5rem;
 
   &:empty::before {
-    content:attr(placeholder);
+    content: attr(placeholder);
     color: #a099be;
   }
 }

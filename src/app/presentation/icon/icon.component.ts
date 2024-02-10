@@ -1,5 +1,5 @@
-import { Component, ElementRef, Input, OnChanges, Renderer2 } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Component, ElementRef, Input, OnChanges, Renderer2 } from '@angular/core';
 
 import { Icon } from './icons';
 
@@ -16,15 +16,13 @@ export class IconComponent implements OnChanges {
     private http: HttpClient,
     private elementRef: ElementRef<HTMLElement>,
     private renderer: Renderer2,
-  ) {
-  }
+  ) {}
 
   ngOnChanges() {
-    this.http.get(`assets/icons/${this.icon}.svg`, { responseType: 'text' })
-      .subscribe(
-        (element) => {
-          this.renderer.setProperty(this.elementRef.nativeElement, 'innerHTML', element);
-        }
-      );
+    this.http
+      .get(`assets/icons/${this.icon}.svg`, { responseType: 'text' })
+      .subscribe((element) => {
+        this.renderer.setProperty(this.elementRef.nativeElement, 'innerHTML', element);
+      });
   }
 }

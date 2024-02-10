@@ -1,0 +1,123 @@
+{
+  "root": true,
+  "env": {
+    "es6": true,
+    "commonjs": true
+  },
+  "plugins": [
+    "import"
+  ],
+  "extends": [
+    "eslint:recommended",
+    "prettier"
+  ],
+  "parserOptions": {
+    "ecmaVersion": 2023
+  },
+  "overrides": [
+    {
+      "plugins": [
+        "@angular-eslint"
+      ],
+      "extends": [
+        "plugin:@angular-eslint/recommended",
+        "plugin:@angular-eslint/template/process-inline-templates",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:@typescript-eslint/eslint-recommended"
+      ],
+      "parser": "@typescript-eslint/parser",
+      "files": [
+        "*.ts"
+      ],
+      "rules": {
+        "@typescript-eslint/explicit-member-accessibility": "off",
+        "@typescript-eslint/explicit-module-boundary-types": "off",
+        "@typescript-eslint/explicit-function-return-type": "off",
+        "@typescript-eslint/no-parameter-properties": "off",
+        "@angular-eslint/component-selector": [
+          "error",
+          {
+            "prefix": "app",
+            "style": "kebab-case",
+            "type": [
+              "element",
+              "attribute"
+            ]
+          }
+        ],
+        "@angular-eslint/directive-selector": [
+          "error",
+          {
+            "prefix": "",
+            "style": "camelCase",
+            "type": "attribute"
+          }
+        ],
+        "@angular-eslint/no-input-rename": "off"
+      }
+    },
+    {
+      "extends": [
+        "plugin:@angular-eslint/template/recommended"
+      ],
+      "parser": "@angular-eslint/template-parser",
+      "files": [
+        "*.html"
+      ]
+    },
+    {
+      "files": [
+        "*.json"
+      ],
+      "parser": "jsonc-eslint-parser",
+      "rules": {}
+    }
+  ],
+  "rules": {
+    "import/no-cycle": [
+      1,
+      {
+        "maxDepth": "∞"
+      }
+    ],
+    "sort-imports": [
+      "warn",
+      {
+        "ignoreCase": true,
+        "ignoreDeclarationSort": true,
+        "ignoreMemberSort": false,
+        "allowSeparatedGroups": true
+      }
+    ],
+    "import/order": [
+      "warn",
+      {
+        "groups": [
+          "builtin",
+          "external",
+          "internal",
+          [
+            "parent",
+            "sibling",
+            "index"
+          ],
+          [
+            "object",
+            "type"
+          ]
+        ],
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        },
+        "newlines-between": "always"
+      }
+    ],
+    "curly": [
+      "error"
+    ]
+  },
+  "settings": {
+    "import/internal-regex": "^@(kb)/"
+  }
+}

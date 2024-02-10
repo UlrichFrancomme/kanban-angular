@@ -1,0 +1,32 @@
+{
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "debug.javascript.autoAttachFilter": "disabled",
+  "debug.javascript.autoAttachSmartPattern": [
+    "!**/{node_modules,npm-global,.yarn,.nvm}/**",
+    "**/$KNOWN_TOOLS$/**",
+    "'**/node_modules/@nx/node/**'"
+  ],
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit",
+    "source.fixAll.eslint": "explicit"
+  },
+  "editor.tabSize": 2,
+  "eslint.options": {
+    "overrideConfigFile": "./.eslintrc.json"
+  },
+  "eslint.validate": ["javascript", "typescript", "html", "json"],
+  "git.allowNoVerifyCommit": true,
+  "typescript.preferences.importModuleSpecifier": "project-relative",
+  "typescript.updateImportsOnFileMove.enabled": "always"
+}

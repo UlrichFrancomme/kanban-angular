@@ -1,18 +1,23 @@
 import { CommonModule } from '@angular/common';
-import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, EventEmitter, Output, ViewChild, signal } from '@angular/core';
-import { PriorityComponent } from '../task/priority/priority.component';
-import { IconComponent } from '../icon/icon.component';
+import {
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Output,
+  signal,
+  ViewChild,
+} from '@angular/core';
 import { Priority, Task } from 'src/app/core/task';
 
+import { IconComponent } from '../icon/icon.component';
+import { PriorityComponent } from '../task/priority/priority.component';
 
 @Component({
   selector: '[app-editable-task]',
   standalone: true,
-  imports: [
-    CommonModule,
-    PriorityComponent,
-    IconComponent,
-  ],
+  imports: [CommonModule, PriorityComponent, IconComponent],
   templateUrl: './editable-task.component.html',
   styleUrls: ['./editable-task.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

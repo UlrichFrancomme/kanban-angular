@@ -1,12 +1,12 @@
 import { CdkDragDrop, DragDropModule } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input, Signal, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit, Signal, signal } from '@angular/core';
+import { faker } from '@faker-js/faker';
+
 import { Status, Task } from '../../core/task';
 import { TasksStore } from '../../core/tasks.store';
-import { faker } from '@faker-js/faker';
-import { TaskComponent } from '../task/task.component';
 import { EditableTaskComponent } from '../editable-task/editable-task.component';
-
+import { TaskComponent } from '../task/task.component';
 
 @Component({
   selector: 'app-column',
@@ -16,14 +16,13 @@ import { EditableTaskComponent } from '../editable-task/editable-task.component'
   styleUrl: './column.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ColumnComponent {
+export class ColumnComponent implements OnInit {
   @Input({ required: true }) status!: Status;
   tasks!: Signal<Task[]>;
 
   editableTaskDisplayed = signal(false);
 
-  constructor(private store: TasksStore) {
-  }
+  constructor(private store: TasksStore) {}
 
   ngOnInit() {
     this.tasks = this.store.selectByStatus(this.status);
@@ -45,7 +44,7 @@ export class ColumnComponent {
         name: faker.person.fullName(),
       },
       status: this.status,
-      priority: data.priority
+      priority: data.priority,
     });
 
     this.editableTaskDisplayed.set(false);
