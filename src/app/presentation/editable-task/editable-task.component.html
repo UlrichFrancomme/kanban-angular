@@ -1,13 +1,11 @@
 <app-priority [priority]="priority()" (updated)="priority.set($event)"></app-priority>
-<div
-  #titleInput
-  class="title"
-  contenteditable
-  placeholder="Entrez votre titre..."
-  [textContent]="title()"
-  (input)="title.set(titleInput.innerText)"
-  (keydown)="onKeydown($event)"
-></div>
+<app-editable-content
+  [placeholder]="'Entrez votre titre...'"
+  [content]="title()"
+  (contentChanged)="title.set($event)"
+  (enterPressed)="confirm()"
+  (escapePressed)="canceled.emit()"
+></app-editable-content>
 
 <div class="actions">
   <button type="button" class="action cancel" (click)="canceled.emit()">
