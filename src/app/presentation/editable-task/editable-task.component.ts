@@ -9,7 +9,8 @@ import {
   signal,
   ViewChild,
 } from '@angular/core';
-import { Priority, Task } from 'src/app/core/task';
+
+import { Priority, Task } from '@kb/core/task';
 
 import { IconComponent } from '../icon/icon.component';
 import { PriorityComponent } from '../task/priority/priority.component';

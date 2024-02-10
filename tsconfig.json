@@ -22,7 +22,21 @@
       "ES2022",
       "ES2023",
       "dom"
-    ]
+    ],
+    "paths": {
+      "@kb/core/*": [
+        "./src/app/core/*"
+      ],
+      "@kb/core": [
+        "./src/app/core"
+      ],
+      "@kb/presentation": [
+        "./src/app/presentation"
+      ],
+      "@kb/presentation/*": [
+        "./src/app/presentation/*"
+      ]
+    },
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

@@ -1,22 +1,24 @@
-import { Injectable, Signal, computed, signal } from '@angular/core';
-import { Priorities, Status, Statuses, Task } from './task';
-
+import { computed, Injectable, signal, Signal } from '@angular/core';
 import { faker } from '@faker-js/faker';
+
+import { Priorities, Status, Statuses, Task } from './task';
 
 @Injectable({ providedIn: 'root' })
 export class TasksStore {
-  private tasks = signal<Task[]>(new Array(10).fill(null).map(() => ({
-    id: faker.string.nanoid(),
-    title: faker.lorem.sentence(),
-    author: {
+  private tasks = signal<Task[]>(
+    new Array(10).fill(null).map(() => ({
       id: faker.string.nanoid(),
-      email: faker.internet.email(),
-      name: faker.person.fullName(),
-    },
-    status: faker.helpers.arrayElement(Statuses),
-    priority: faker.helpers.arrayElement(Priorities),
-  })), { equal: (a, b) => JSON.stringify(a) === JSON.stringify(b) });
-
+      title: faker.lorem.sentence(),
+      author: {
+        id: faker.string.nanoid(),
+        email: faker.internet.email(),
+        name: faker.person.fullName(),
+      },
+      status: faker.helpers.arrayElement(Statuses),
+      priority: faker.helpers.arrayElement(Priorities),
+    })),
+    { equal: (a, b) => JSON.stringify(a) === JSON.stringify(b) },
+  );
 
   selectByStatus(status: Status): Signal<Task[]> {
     return computed(() => {
@@ -31,11 +33,19 @@ export class TasksStore {
       return 0;
     }
 
-    if (a.priority === 'low' || (a.priority === 'medium' && b.priority !== 'low') || (a.priority === 'high' && b.priority === 'critical')) {
+    if (
+      a.priority === 'low' ||
+      (a.priority === 'medium' && b.priority !== 'low') ||
+      (a.priority === 'high' && b.priority === 'critical')
+    ) {
       return 1;
     }
 
-    if (b.priority === 'low' || b.priority === 'medium' || (b.priority === 'high' && a.priority === 'critical')) {
+    if (
+      b.priority === 'low' ||
+      b.priority === 'medium' ||
+      (b.priority === 'high' && a.priority === 'critical')
+    ) {
       return -1;
     }
 
@@ -65,9 +75,12 @@ export class TasksStore {
   }
 
   addTask(task: Omit<Task, 'id'>): void {
-    this.tasks.update((tasks) => [...tasks, {
-      id: faker.string.nanoid(),
-      ...task,
-    }]);
+    this.tasks.update((tasks) => [
+      ...tasks,
+      {
+        id: faker.string.nanoid(),
+        ...task,
+      },
+    ]);
   }
 }

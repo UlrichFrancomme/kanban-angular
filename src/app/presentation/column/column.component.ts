@@ -3,8 +3,8 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input, OnInit, Signal, signal } from '@angular/core';
 import { faker } from '@faker-js/faker';
 
-import { Status, Task } from '../../core/task';
-import { TasksStore } from '../../core/tasks.store';
+import { Status, Task, TasksStore } from '@kb/core';
+
 import { EditableTaskComponent } from '../editable-task/editable-task.component';
 import { TaskComponent } from '../task/task.component';
 

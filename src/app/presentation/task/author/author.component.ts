@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, HostBinding, input } from '@angular/core';
-import { Author } from 'src/app/core/task';
+
+import { Author } from '@kb/core/task';
 
 @Component({
   selector: 'app-author',

@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { Task } from 'src/app/core/task';
+
+import { Task } from '@kb/core/task';
 
 import { AuthorComponent } from './author/author.component';
 import { PriorityComponent } from './priority/priority.component';
