@@ -1,6 +1,11 @@
-<div class="column-title">En cours</div>
-<ul cdkDropList class="tasks" (cdkDropListDropped)="drop($event)">
-  @for (task of tasks(); let i = $index; track task.id) {
-  <li app-task [task]="task" cdkDrag></li>
+<div class="column-title">{{ status }}</div>
+<ul
+  id="{{ status }}"
+  cdkDropList
+  class="tasks"
+  (cdkDropListDropped)="drop($event)"
+>
+  @for (task of tasks(); track task.id) {
+  <li app-task [task]="task" cdkDrag [cdkDragData]="task"></li>
   }
 </ul>

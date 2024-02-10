@@ -1,9 +1,9 @@
-import { CdkDragDrop, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, DragDropModule } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
-import { faker } from '@faker-js/faker';
-import { Task, Statuses, Priorities } from '../task/task';
+import { ChangeDetectionStrategy, Component, Input, Signal } from '@angular/core';
+import { Status, Task } from '../core/task';
 import { TaskComponent } from '../task/task.component';
+import { TasksStore } from '../core/tasks.store';
 
 @Component({
   selector: 'app-column',
@@ -14,22 +14,20 @@ import { TaskComponent } from '../task/task.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ColumnComponent {
-  tasks = signal<Task[]>(new Array(30).fill(null).map(() => ({
-    id: faker.string.nanoid(),
-    title: faker.lorem.sentence(),
-    author: {
-      id: faker.string.nanoid(),
-      email: faker.internet.email(),
-      name: faker.person.fullName(),
-    },
-    status: 'in_progress',
-    priority: faker.helpers.arrayElement(Priorities),
-  })));
+  @Input({ required: true }) status!: Status;
+  tasks!: Signal<Task[]>;
 
-  drop(event: CdkDragDrop<Task[]>) {
-    this.tasks.update((tasks) => {
-      moveItemInArray(tasks, event.previousIndex, event.currentIndex);
-      return tasks;
-    });
+  constructor(private store: TasksStore) {
+  }
+
+  ngOnInit() {
+    this.tasks = this.store.selectByStatus(this.status);
+  }
+
+  drop(event: CdkDragDrop<Task[], Task[], Task>) {
+    if (event.container === event.previousContainer) {
+      return;
+    }
+    this.store.changeTaskStatus(event.item.data.id, this.status);
   }
 }

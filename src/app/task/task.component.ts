@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input, computed, input, signal } from '@angular/core';
 import { PriorityComponent } from './priority/priority.component';
-import { Task } from './task';
+import { Task } from '../core/task';
 import { AuthorComponent } from './author/author.component';
 
 @Component({
