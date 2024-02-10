@@ -1,20 +1,35 @@
 :host {
-  display: block;
+  display: flex;
+  align-items: flex-end;
+  gap: 1rem;
 }
 
-div {
+.choices {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.tag {
   display: block;
   width: fit-content;
 
   padding: 0.25rem 0.5rem;
 
+  border: none;
   border-radius: 0.25rem;
 
   font-family: OpenSans;
-  font-size: 0.75rem;
+  font-size: 1rem;
   font-weight: 400;
   text-align: center;
   text-transform: capitalize;
+
+  cursor: pointer;
+}
+
+.choice {
+  font-size: 0.75rem;
 }
 
 .low {

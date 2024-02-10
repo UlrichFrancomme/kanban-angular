@@ -1,5 +1,5 @@
 <header>
-  <app-priority [priority]="task.priority"></app-priority>
+  <app-priority [priority]="task.priority" (updated)="changePriority($event)"></app-priority>
   <app-icon #trigger class="menu-trigger" icon="menu" (click)="triggerMenu()"></app-icon>
 </header>
 <div class="title">{{ task.title }}</div>

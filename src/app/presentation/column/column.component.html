@@ -13,6 +13,12 @@
     ></li>
   }
   @for (task of tasks(); track task.id) {
-    <li app-task [task]="task" cdkDrag [cdkDragData]="task"></li>
+    <li
+      app-task
+      [task]="task"
+      cdkDrag
+      [cdkDragData]="task"
+      (prorityChanged)="changePriority($event)"
+    ></li>
   }
 </ul>

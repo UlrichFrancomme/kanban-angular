@@ -6,16 +6,15 @@ import {
   EventEmitter,
   Input,
   Output,
-  signal,
   ViewChild,
 } from '@angular/core';
 
-import { Task } from '@kb/core/task';
+import { Priority, Task } from '@kb/core/task';
 
 import { AuthorComponent } from './author/author.component';
-import { PriorityComponent } from './priority/priority.component';
 import { IconComponent } from '../icon/icon.component';
 import { MenuService } from '../menu/menu.service';
+import { PriorityComponent } from '../priority/priority.component';
 
 @Component({
   selector: '[app-task]',
@@ -28,20 +27,11 @@ import { MenuService } from '../menu/menu.service';
 export class TaskComponent {
   @Input({ required: true }) task!: Task;
   @Output() deleted = new EventEmitter<string>();
+  @Output() prorityChanged = new EventEmitter<Pick<Task, 'id' | 'priority'>>();
 
   @ViewChild('trigger', { read: ElementRef }) trigger?: ElementRef<HTMLElement>;
-  @ViewChild('menu') menu?: ElementRef<HTMLElement>;
-
-  menuDisplayed = signal(false);
 
   constructor(private menuService: MenuService) {}
-
-  // @HostListener('window:click', ['$event'])
-  // onBackdropClick(event: PointerEvent) {
-  // if (this.menu?.nativeElement.contains(event.target as Node) === false) {
-  // this.menuDisplayed.set(false);
-  // }
-  // }
 
   triggerMenu(): void {
     const viewportOffset = this.trigger?.nativeElement?.getBoundingClientRect();
@@ -49,5 +39,9 @@ export class TaskComponent {
       top: viewportOffset?.top ?? 0,
       left: viewportOffset?.left ?? 0,
     });
+  }
+
+  changePriority(priority: Priority): void {
+    this.prorityChanged.emit({ id: this.task.id, priority });
   }
 }

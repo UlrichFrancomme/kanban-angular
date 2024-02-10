@@ -1,0 +1,15 @@
+<button type="button" class="trigger tag" [ngClass]="priority" (click)="choicesDisplayed = true">
+  {{ priority }}
+</button>
+
+@if (choicesDisplayed) {
+  <ul class="choices">
+    @for (choice of choices; track choice) {
+      <li>
+        <button type="button" class="choice tag" [ngClass]="choice" (click)="select(choice)">
+          {{ choice }}
+        </button>
+      </li>
+    }
+  </ul>
+}

@@ -1,4 +1,4 @@
-<app-priority [priority]="priority()"></app-priority>
+<app-priority [priority]="priority()" (updated)="priority.set($event)"></app-priority>
 <div
   #titleInput
   class="title"

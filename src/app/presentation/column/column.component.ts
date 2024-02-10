@@ -49,4 +49,8 @@ export class ColumnComponent implements OnInit {
 
     this.editableTaskDisplayed.set(false);
   }
+
+  changePriority(update: Pick<Task, 'id' | 'priority'>) {
+    this.store.updatePriority(update.id, update.priority);
+  }
 }

@@ -1,7 +1,7 @@
 import { computed, Injectable, signal, Signal } from '@angular/core';
 import { faker } from '@faker-js/faker';
 
-import { Priorities, Status, Statuses, Task } from './task';
+import { Priorities, Priority, Status, Statuses, Task } from './task';
 
 @Injectable({ providedIn: 'root' })
 export class TasksStore {
@@ -81,6 +81,18 @@ export class TasksStore {
         return tasks.toSpliced(taskIndex, 1);
       }
 
+      return tasks;
+    });
+  }
+
+  updatePriority(taskId: string, priority: Priority): void {
+    this.tasks.update((tasks) => {
+      const taskIndex = tasks.findIndex((task) => task.id === taskId);
+      const [foundTask] = tasks.splice(taskIndex, 1);
+      if (foundTask) {
+        foundTask.priority = priority;
+        return [...tasks, foundTask];
+      }
       return tasks;
     });
   }

@@ -1,6 +1,6 @@
 :host {
   display: block;
-  width: 26.25rem;
+  width: 100%;
 
   padding: 1.25rem;
 
@@ -9,7 +9,7 @@
 }
 
 app-priority {
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.75rem;
 }
 
 .title {
@@ -24,7 +24,7 @@ app-priority {
   color: #0d062d;
   font-family: Inconsolata;
   font-weight: 400;
-  font-size: 1.5rem;
+  font-size: 1.75rem;
 
   &:empty::before {
     content: attr(placeholder);

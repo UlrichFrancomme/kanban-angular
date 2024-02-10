@@ -13,7 +13,7 @@ import {
 import { Priority, Task } from '@kb/core/task';
 
 import { IconComponent } from '../icon/icon.component';
-import { PriorityComponent } from '../task/priority/priority.component';
+import { PriorityComponent } from '../priority/priority.component';
 
 @Component({
   selector: '[app-editable-task]',
