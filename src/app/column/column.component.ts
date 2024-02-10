@@ -1,14 +1,17 @@
 import { CdkDragDrop, DragDropModule } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input, Signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, Signal, signal } from '@angular/core';
 import { Status, Task } from '../core/task';
 import { TaskComponent } from '../task/task.component';
 import { TasksStore } from '../core/tasks.store';
+import { faker } from '@faker-js/faker';
+import { EditableTaskComponent } from '../editable-task/editable-task.component';
+
 
 @Component({
   selector: 'app-column',
   standalone: true,
-  imports: [CommonModule, DragDropModule, TaskComponent],
+  imports: [CommonModule, DragDropModule, TaskComponent, EditableTaskComponent],
   templateUrl: './column.component.html',
   styleUrl: './column.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -16,6 +19,8 @@ import { TasksStore } from '../core/tasks.store';
 export class ColumnComponent {
   @Input({ required: true }) status!: Status;
   tasks!: Signal<Task[]>;
+
+  editableTaskDisplayed = signal(false);
 
   constructor(private store: TasksStore) {
   }
@@ -29,5 +34,20 @@ export class ColumnComponent {
       return;
     }
     this.store.changeTaskStatus(event.item.data.id, this.status);
+  }
+
+  addTask(data: Pick<Task, 'title' | 'priority'>) {
+    this.store.addTask({
+      title: data.title,
+      author: {
+        id: faker.string.nanoid(),
+        email: faker.internet.email(),
+        name: faker.person.fullName(),
+      },
+      status: this.status,
+      priority: data.priority
+    });
+
+    this.editableTaskDisplayed.set(false);
   }
 }

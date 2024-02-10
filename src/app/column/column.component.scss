@@ -1,5 +1,6 @@
 :host {
-  display: block;
+  display: flex;
+  flex-direction: column;
   overflow-y: scroll;
 
   padding: 2rem;
@@ -19,6 +20,8 @@
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+  
+  padding-bottom: 15rem;
 }
 
 .cdk-drag-preview {
@@ -29,4 +32,19 @@
 
 .cdk-drag-placeholder {
   opacity: 0;
+}
+
+.add {
+  width: fit-content;
+  align-self: center;
+
+  margin-bottom: 1rem;
+
+  background-color: transparent;
+  border: none;
+
+  color: #123612;
+  font-family: Inconsolata;
+  font-size: 1.5rem;
+  font-weight: 500;
 }

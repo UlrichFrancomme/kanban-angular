@@ -5,7 +5,7 @@ import { faker } from '@faker-js/faker';
 
 @Injectable({ providedIn: 'root' })
 export class TasksStore {
-  private tasks = signal<Task[]>(new Array(100).fill(null).map(() => ({
+  private tasks = signal<Task[]>(new Array(10).fill(null).map(() => ({
     id: faker.string.nanoid(),
     title: faker.lorem.sentence(),
     author: {
@@ -62,5 +62,12 @@ export class TasksStore {
       }
       return tasks;
     });
+  }
+
+  addTask(task: Omit<Task, 'id'>): void {
+    this.tasks.update((tasks) => [...tasks, {
+      id: faker.string.nanoid(),
+      ...task,
+    }]);
   }
 }

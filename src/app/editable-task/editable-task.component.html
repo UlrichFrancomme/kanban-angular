@@ -1,0 +1,24 @@
+<app-priority [priority]="priority()"></app-priority>
+<div
+  #titleInput
+  class="title"
+  contenteditable
+  placeholder="Entrez votre titre..."
+  [textContent]="title()"
+  (input)="title.set(titleInput.innerText)"
+  (keydown)="onKeydown($event)"
+></div>
+
+<div class="actions">
+  <button type="button" class="action cancel" (click)="canceled.emit()">
+    <app-icon [icon]="'close'"></app-icon>
+  </button>
+  <button
+    type="button"
+    class="action confirm"
+    [disabled]="title().length === 0"
+    (click)="confirm()"
+  >
+    <app-icon [icon]="'check'"></app-icon>
+  </button>
+</div>

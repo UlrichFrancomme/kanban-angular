@@ -1,0 +1,75 @@
+:host {
+  display: block;
+  width: 26.25rem;
+
+  padding: 1.25rem;
+
+  background-color: white;
+  border-radius: 1rem;
+}
+
+app-priority {
+  margin-bottom: 0.5rem;
+}
+
+.title {
+  width: 100%;
+  height: fit-content;
+
+  margin-bottom: 2rem;
+
+  border: none;
+  outline: none;
+
+  color: #0d062d;
+  font-family: Inconsolata;
+  font-weight: 400;
+  font-size: 1.5rem;
+
+  &:empty::before {
+    content:attr(placeholder);
+    color: #a099be;
+  }
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.action {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 2rem;
+  height: 2rem;
+
+  border: none;
+  border-radius: 100%;
+
+  text-align: center;
+  cursor: pointer;
+
+  &:disabled {
+    background-color: lightgray !important;
+    color: gray !important;
+    cursor: not-allowed;
+  }
+
+  app-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  &.cancel {
+    background-color: #fbf1f2;
+    color: #d53949;
+  }
+
+  &.confirm {
+    background-color: #e9f7eb;
+    color: #069d1f;
+  }
+}

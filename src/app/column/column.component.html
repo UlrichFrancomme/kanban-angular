@@ -1,11 +1,22 @@
 <div class="column-title">{{ status }}</div>
+@if(!editableTaskDisplayed()) {
+<button type="button" class="add" (click)="editableTaskDisplayed.set(true)">
+  + Ajouter une tâche
+</button>
+}
 <ul
   id="{{ status }}"
   cdkDropList
   class="tasks"
   (cdkDropListDropped)="drop($event)"
 >
-  @for (task of tasks(); track task.id) {
+  @if (editableTaskDisplayed()) {
+  <li
+    app-editable-task
+    (created)="addTask($event)"
+    (canceled)="editableTaskDisplayed.set(false)"
+  ></li>
+  } @for (task of tasks(); track task.id) {
   <li app-task [task]="task" cdkDrag [cdkDragData]="task"></li>
   }
 </ul>
