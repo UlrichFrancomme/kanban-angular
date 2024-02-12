@@ -1,24 +1,11 @@
 import { computed, Injectable, signal, Signal } from '@angular/core';
-import { faker } from '@faker-js/faker';
+import { nanoid } from 'nanoid';
 
-import { Priorities, Priority, Status, Statuses, Task } from './task';
+import { Priority, Status, Task } from './task';
 
 @Injectable({ providedIn: 'root' })
 export class TasksStore {
-  private tasks = signal<Task[]>(
-    new Array(10).fill(null).map(() => ({
-      id: faker.string.nanoid(),
-      title: faker.lorem.sentence(),
-      author: {
-        id: faker.string.nanoid(),
-        email: faker.internet.email(),
-        name: faker.person.fullName(),
-      },
-      status: faker.helpers.arrayElement(Statuses),
-      priority: faker.helpers.arrayElement(Priorities),
-    })),
-    { equal: (a, b) => JSON.stringify(a) === JSON.stringify(b) },
-  );
+  private tasks = signal<Task[]>([]);
 
   selectByStatus(status: Status): Signal<Task[]> {
     return computed(() => {
@@ -68,7 +55,7 @@ export class TasksStore {
     this.tasks.update((tasks) => [
       ...tasks,
       {
-        id: faker.string.nanoid(),
+        id: nanoid(),
         ...task,
       },
     ]);

@@ -1,7 +1,6 @@
-import { CdkDragDrop, DragDropModule } from '@angular/cdk/drag-drop';
+import { CdkDrag, CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, Input, OnInit, Signal, signal } from '@angular/core';
-import { faker } from '@faker-js/faker';
 
 import { Status, Task, TasksStore } from '@kb/core';
 
@@ -11,7 +10,7 @@ import { TaskComponent } from '../task/task.component';
 @Component({
   selector: 'app-column',
   standalone: true,
-  imports: [CommonModule, DragDropModule, TaskComponent, EditableTaskComponent],
+  imports: [CommonModule, CdkDropList, CdkDrag, TaskComponent, EditableTaskComponent],
   templateUrl: './column.component.html',
   styleUrl: './column.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -39,9 +38,9 @@ export class ColumnComponent implements OnInit {
     this.store.addTask({
       title: data.title,
       author: {
-        id: faker.string.nanoid(),
-        email: faker.internet.email(),
-        name: faker.person.fullName(),
+        id: 'ulrichf',
+        name: 'Ulrich Francomme',
+        email: 'ulrich@francomme.re',
       },
       status: this.status,
       priority: data.priority,
