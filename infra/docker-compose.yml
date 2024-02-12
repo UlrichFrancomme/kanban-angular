@@ -1,0 +1,20 @@
+version: '3.9'
+
+services:
+    app:
+        build:
+            context: ..
+            dockerfile: ./infra/Dockerfile
+            target: base
+        image: ng-kanban:development
+        container_name: ng-kanban-dev
+        ports:
+            - "4300:4300"
+        networks:
+            - ng-kanban
+        volumes:
+            - ..:/home/node/app
+        command: ng serve --host 0.0.0.0
+
+networks:
+    ng-kanban:
