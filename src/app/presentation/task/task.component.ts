@@ -35,7 +35,7 @@ export class TaskComponent {
 
   triggerMenu(): void {
     const viewportOffset = this.trigger?.nativeElement?.getBoundingClientRect();
-    this.menuService.openMenu(this.task.id, {
+    this.menuService.openMenu(this.task, {
       top: viewportOffset?.top ?? 0,
       left: viewportOffset?.left ?? 0,
       right: viewportOffset?.right ?? 0,

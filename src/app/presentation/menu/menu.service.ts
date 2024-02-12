@@ -7,6 +7,7 @@ import {
 } from '@angular/core';
 
 import { MenuComponent } from './menu.component';
+import { Task } from '../../core';
 
 type Position = {
   top: number;
@@ -40,11 +41,11 @@ export class MenuService {
    *
    * If called when there is already a MenuComponent opened, the existing one is removed.
    *
-   * @param taskId ID of the task for which the menu is opened
+   * @param task task for which the menu is opened
    * @param position Position of the menu trigger on the task component relative to the viewport
    *
    */
-  openMenu(taskId: string, position: Position): void {
+  openMenu(task: Task, position: Position): void {
     if (!this.hostContainerRef) {
       return;
     }
@@ -54,7 +55,7 @@ export class MenuService {
     }
 
     this.menuInstance = this.hostContainerRef?.createComponent(MenuComponent);
-    this.menuInstance.instance.taskId = taskId;
+    this.menuInstance.instance.task = task;
 
     this.setMenuPosition(position);
   }
