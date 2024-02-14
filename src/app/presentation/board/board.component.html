@@ -1,5 +1,9 @@
 <div class="board" cdkDropListGroup>
-  <app-column [status]="'todo'"></app-column>
-  <app-column [status]="'in_progress'"></app-column>
-  <app-column [status]="'done'"></app-column>
+  @if (isLargeScreen()) {
+    <app-column [status]="'todo'"></app-column>
+    <app-column [status]="'in_progress'"></app-column>
+    <app-column [status]="'done'"></app-column>
+  } @else {
+    <app-column [status]="'todo'"></app-column>
+  }
 </div>

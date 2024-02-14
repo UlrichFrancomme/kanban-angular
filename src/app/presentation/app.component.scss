@@ -1,3 +1,5 @@
+@import 'mixins';
+
 :host {
   display: block;
   width: 100vw;
@@ -5,6 +7,14 @@
 
   overflow: hidden;
 
-  padding: 5rem;
+  padding: 1rem;
   margin: 0;
+
+  @include breakpoint(lg) {
+    padding: 3rem;
+  }
+
+  @include breakpoint(xl) {
+    padding: 5rem;
+  }
 }
