@@ -1,5 +1,5 @@
 <header>
-  <app-priority [priority]="task().priority" (updated)="changePriority($event)"></app-priority>
+  <app-priority [priority]="task().priority" (updated)="prorityChanged.emit($event)"></app-priority>
   <app-icon class="menu-trigger" icon="menu" [menuTriggerFor]="menu"></app-icon>
 </header>
 <div class="title">{{ task().title }}</div>
@@ -7,8 +7,8 @@
 
 <ng-template #menu>
   <ul class="menu">
-    <li class="menu-item">Supprimer</li>
-    <li [menuTriggerFor]="statusMenu" [asChild]="true" class="menu-item">
+    <li menuItem class="menu-item" (click)="deleted.emit()">Supprimer</li>
+    <li menuItem [menuTriggerFor]="statusMenu" [asChild]="true" class="menu-item">
       Changer le statut
     </li>
   </ul>
@@ -17,7 +17,7 @@
 <ng-template #statusMenu>
   <ul class="menu">
     @for (status of availableStatuses(); track status) {
-      <li class="menu-item" (click)="changeStatus(status)">{{ status }}</li>
+      <li menuItem class="menu-item" (click)="statusChanged.emit(status)">{{ status }}</li>
     }
   </ul>
 </ng-template>

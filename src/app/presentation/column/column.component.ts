@@ -31,18 +31,18 @@ export class ColumnComponent implements OnInit {
 
   constructor(private store: TasksStore) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.tasks = computed(() => this.store.selectByStatus(this.status()))();
   }
 
-  drop(event: CdkDragDrop<Task[], Task[], Task>) {
+  drop(event: CdkDragDrop<Task[], Task[], Task>): void {
     if (event.container === event.previousContainer) {
       return;
     }
     this.store.updateStatus(event.item.data.id, this.status());
   }
 
-  addTask(data: Pick<Task, 'title' | 'priority'>) {
+  addTask(data: Pick<Task, 'title' | 'priority'>): void {
     this.store.addTask({
       title: data.title,
       author: {
@@ -57,11 +57,15 @@ export class ColumnComponent implements OnInit {
     this.editableTaskDisplayed.set(false);
   }
 
-  changePriority(priority: Priority, taskId: string) {
+  changePriority(priority: Priority, taskId: string): void {
     this.store.updatePriority(taskId, priority);
   }
 
-  changeStatus(status: Status, taskId: string) {
+  changeStatus(status: Status, taskId: string): void {
     this.store.updateStatus(taskId, status);
+  }
+
+  deleteTask(taskId: string): void {
+    this.store.deleteTask(taskId);
   }
 }

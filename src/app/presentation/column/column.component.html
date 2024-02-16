@@ -23,6 +23,7 @@
       [cdkDragData]="task"
       (prorityChanged)="changePriority($event, task.id)"
       (statusChanged)="changeStatus($event, task.id)"
+      (deleted)="deleteTask(task.id)"
     ></li>
   }
 </ul>

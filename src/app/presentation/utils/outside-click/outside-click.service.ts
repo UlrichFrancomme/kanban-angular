@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { filter, fromEvent, Observable } from 'rxjs';
+import { filter, fromEvent, Observable, shareReplay } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class OutsideClickListener {
@@ -10,6 +10,9 @@ export class OutsideClickListener {
   }
 
   clickedOutsideOf(element: HTMLElement): Observable<PointerEvent> {
-    return this.outsideObserver.pipe(filter((event) => !element.contains(event.target as Node)));
+    return this.outsideObserver.pipe(
+      shareReplay(),
+      filter((event) => !element.contains(event.target as Node)),
+    );
   }
 }

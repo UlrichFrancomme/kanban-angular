@@ -1,20 +1,3 @@
-/**
- * Gestion de la position :
- *    Un menu peut s'afficher :
- *      1. à droite du trigger et s'ouvrir vers le bas, position par défut)
- *      2. à droite du trigger et s'ouvrir vers le haut, si 1. ne tient pas dans le viewport)
- *      3. à gauche du trigger et s'ouvrir vers le bas, si 1. ne tient pas dans le viewport)
- *      4. à gauche du trigger et s'ouvrir vers le haut, si 1. et 3. ne tiennent pas dans le viewport)
- *
- * Sous menu :
- *    Un menu peut être composé de plusieurs sous menu.
- *    Le sous menu suit les mêmes règles de positionnement que le menu
- *
- * Backdrop click :
- *    Si un menu est ouvert et que l'utilisateur clique en dehors du menu, ce dernier (et tous ses sous menus) doit être fermé
- *
- */
-
 import {
   Directive,
   ElementRef,
@@ -26,11 +9,15 @@ import {
   TemplateRef,
   ViewContainerRef,
 } from '@angular/core';
-import { skip, Subject, takeUntil } from 'rxjs';
+import { Subject } from 'rxjs';
 
 import { Overlay } from './overlay';
-import { OutsideClickListener } from '../outside-click/outside-click.service';
 
+/**
+ * MenuTrigger takes care of the creation of the menu and to add it into the DOM.
+ * It also handles its positioning to always be visible in the viewport.
+ *
+ */
 @Directive({ selector: '[menuTriggerFor]', standalone: true })
 export class MenuTriggerDirective implements OnDestroy {
   @Input('menuTriggerFor') target!: TemplateRef<void>;
@@ -42,7 +29,6 @@ export class MenuTriggerDirective implements OnDestroy {
   constructor(
     private elementRef: ElementRef<HTMLElement>,
     private vcr: ViewContainerRef,
-    private outsideClickListener: OutsideClickListener,
     private renderer: Renderer2,
     private overlay: Overlay,
   ) {}
@@ -58,27 +44,29 @@ export class MenuTriggerDirective implements OnDestroy {
       return;
     }
 
-    if (!this.viewRef) {
+    if (!this.viewRef || this.viewRef.destroyed) {
       this.viewRef = this.vcr.createEmbeddedView(this.target);
 
-      let parent = this.elementRef.nativeElement;
+      const overlay = this.overlay.create();
+      const parent = this.asChild ? this.elementRef.nativeElement : overlay;
 
-      if (!this.asChild) {
-        parent = this.overlay.create();
-        this.overlay.attach();
-      }
+      this.overlay.attach(this.viewRef);
 
       for (const node of this.viewRef.rootNodes) {
         this.renderer.appendChild(parent, node);
       }
 
-      const menu: HTMLElement = this.viewRef.rootNodes[0];
-
-      this.setMenuPosition(menu);
-      this.handleClickOutsideOfMenu(menu);
+      this.setMenuPosition(this.viewRef.rootNodes[0]);
     }
   }
 
+  /**
+   * A menu can be displayed :
+   *  1. at the right of its trigger and open down (default)
+   *  2. at the right of its trigger and open up, if there is no room to open down
+   *  3. at the left of its trigger and open down, if 1. is not possible
+   *  4. at the left of its trigger and open down, if 1. and 3. are not possible
+   */
   private setMenuPosition(menu: HTMLElement): void {
     const trigger = this.elementRef.nativeElement;
     const triggerRect = trigger.getBoundingClientRect();
@@ -110,25 +98,6 @@ export class MenuTriggerDirective implements OnDestroy {
     } else {
       const bottom = isChildOfTrigger ? 0 : viewportHeight - triggerRect.bottom;
       this.renderer.setStyle(menu, 'bottom', `${bottom}px`);
-    }
-  }
-
-  private handleClickOutsideOfMenu(element: HTMLElement) {
-    this.outsideClickListener
-      .clickedOutsideOf(element)
-      .pipe(skip(1), takeUntil(this.unsubscribe$))
-      .subscribe(() => {
-        this.destroy();
-        this.unsubscribe$.next();
-      });
-  }
-
-  private destroy() {
-    this.viewRef?.destroy();
-    this.viewRef = undefined;
-
-    if (!this.asChild) {
-      this.overlay.deattach();
     }
   }
 }
