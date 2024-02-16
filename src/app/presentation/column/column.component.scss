@@ -10,12 +10,20 @@
 header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  gap: 1rem;
+
+  margin-bottom: 2rem;
+}
+
+.status-trigger {
+  width: 2rem;
+  height: 2rem;
+
+  background-color: transparent;
+  border: none;
 }
 
 .column-title {
-  margin-bottom: 2rem;
-
   color: #123612;
   font-family: OpenSans;
   font-size: 2rem;

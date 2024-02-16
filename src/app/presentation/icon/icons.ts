@@ -1,1 +1,1 @@
-export type Icon = 'check' | 'close' | 'menu';
+export type Icon = 'caret-down' | 'check' | 'close' | 'menu';

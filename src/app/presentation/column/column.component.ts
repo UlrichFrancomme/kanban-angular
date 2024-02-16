@@ -1,39 +1,41 @@
 import { CdkDrag, CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  input,
-  OnInit,
-  signal,
-  Signal,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input, model, signal } from '@angular/core';
 
-import { Priority, Status, Task, TasksStore } from '@kb/core';
+import { Priority, Status, Statuses, Task, TasksStore } from '@kb/core';
 
 import { EditableTaskComponent } from '../editable-task/editable-task.component';
+import { IconComponent } from '../icon/icon.component';
 import { TaskComponent } from '../task/task.component';
+import { MenuItemDirective, MenuTriggerDirective } from '../utils/menu';
 
 @Component({
   selector: 'app-column',
   standalone: true,
-  imports: [CommonModule, CdkDropList, CdkDrag, TaskComponent, EditableTaskComponent],
+  imports: [
+    CommonModule,
+    CdkDropList,
+    CdkDrag,
+    IconComponent,
+    TaskComponent,
+    EditableTaskComponent,
+    MenuTriggerDirective,
+    MenuItemDirective,
+  ],
   templateUrl: './column.component.html',
   styleUrl: './column.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ColumnComponent implements OnInit {
-  status = input.required<Status>();
-  tasks!: Signal<Task[]>;
+export class ColumnComponent {
+  status = model.required<Status>();
+  displayStatusPicker = input<boolean>(false);
 
+  tasks = computed(() => this.store.selectByStatus(this.status()));
+
+  statusChoices = Statuses;
   editableTaskDisplayed = signal(false);
 
   constructor(private store: TasksStore) {}
-
-  ngOnInit(): void {
-    this.tasks = computed(() => this.store.selectByStatus(this.status()))();
-  }
 
   drop(event: CdkDragDrop<Task[], Task[], Task>): void {
     if (event.container === event.previousContainer) {
@@ -57,11 +59,15 @@ export class ColumnComponent implements OnInit {
     this.editableTaskDisplayed.set(false);
   }
 
-  changePriority(priority: Priority, taskId: string): void {
+  changeStatus(status: Status) {
+    this.status.set(status);
+  }
+
+  updateTaskPriority(priority: Priority, taskId: string): void {
     this.store.updatePriority(taskId, priority);
   }
 
-  changeStatus(status: Status, taskId: string): void {
+  updateTaskStatus(status: Status, taskId: string): void {
     this.store.updateStatus(taskId, status);
   }
 

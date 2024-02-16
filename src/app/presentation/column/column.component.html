@@ -1,5 +1,10 @@
 <header>
   <div class="column-title">{{ status() }}</div>
+  @if (displayStatusPicker()) {
+    <button class="status-trigger" [menuTriggerFor]="statusMenu">
+      <app-icon icon="caret-down"></app-icon>
+    </button>
+  }
 </header>
 
 @if (!editableTaskDisplayed()) {
@@ -15,15 +20,23 @@
       (canceled)="editableTaskDisplayed.set(false)"
     ></li>
   }
-  @for (task of tasks(); track task.id) {
+  @for (task of tasks()()(); track task.id) {
     <li
       app-task
       [task]="task"
       cdkDrag
       [cdkDragData]="task"
-      (prorityChanged)="changePriority($event, task.id)"
-      (statusChanged)="changeStatus($event, task.id)"
+      (prorityChanged)="updateTaskPriority($event, task.id)"
+      (statusChanged)="updateTaskStatus($event, task.id)"
       (deleted)="deleteTask(task.id)"
     ></li>
   }
 </ul>
+
+<ng-template #statusMenu>
+  <ul class="menu">
+    @for (choice of statusChoices; track choice) {
+      <li menuItem class="menu-item" (click)="changeStatus(choice)">{{ choice }}</li>
+    }
+  </ul>
+</ng-template>
