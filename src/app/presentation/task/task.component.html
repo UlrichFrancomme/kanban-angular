@@ -1,6 +1,12 @@
 <header>
-  <app-priority [priority]="task.priority" (updated)="changePriority($event)"></app-priority>
-  <app-icon #trigger class="menu-trigger" icon="menu" (click)="triggerMenu()"></app-icon>
+  <app-priority [priority]="task().priority" (updated)="changePriority($event)"></app-priority>
+  <app-icon class="menu-trigger" icon="menu" [menuTriggerFor]="menu"></app-icon>
 </header>
-<div class="title">{{ task.title }}</div>
-<app-author [author]="task.author"></app-author>
+<div class="title">{{ task().title }}</div>
+<app-author [author]="task().author"></app-author>
+
+<ng-template #menu>
+  <ul class="menu">
+    <li class="menu-item">Supprimer</li>
+  </ul>
+</ng-template>

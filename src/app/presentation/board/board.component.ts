@@ -1,10 +1,9 @@
 import { CdkDropListGroup } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, ViewContainerRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 
 import { ColumnComponent } from '../column/column.component';
-import { MenuService } from '../menu/menu.service';
 import { BreakpointService } from '../utils/breakpoint/breakpoint.service';
 
 @Component({
@@ -18,11 +17,5 @@ import { BreakpointService } from '../utils/breakpoint/breakpoint.service';
 export class BoardComponent {
   isLargeScreen = toSignal(this.breakpointService.isMatching('lg'));
 
-  constructor(
-    menuService: MenuService,
-    viewContainerRef: ViewContainerRef,
-    private breakpointService: BreakpointService,
-  ) {
-    menuService.initHostContainerRef(viewContainerRef);
-  }
+  constructor(private breakpointService: BreakpointService) {}
 }

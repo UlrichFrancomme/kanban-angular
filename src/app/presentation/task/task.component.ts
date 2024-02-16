@@ -4,9 +4,8 @@ import {
   Component,
   ElementRef,
   EventEmitter,
-  Input,
+  input,
   Output,
-  ViewChild,
 } from '@angular/core';
 
 import { Priority, Task } from '@kb/core/task';
@@ -15,32 +14,22 @@ import { AuthorComponent } from './author/author.component';
 import { IconComponent } from '../icon/icon.component';
 import { MenuService } from '../menu/menu.service';
 import { PriorityComponent } from '../priority/priority.component';
+import { MenuTriggerDirective } from '../utils/menu/menu.directive';
 
 @Component({
   selector: '[app-task]',
   standalone: true,
-  imports: [CommonModule, IconComponent, PriorityComponent, AuthorComponent],
+  imports: [CommonModule, IconComponent, PriorityComponent, AuthorComponent, MenuTriggerDirective],
   templateUrl: './task.component.html',
   styleUrls: ['./task.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TaskComponent {
-  @Input({ required: true }) task!: Task;
+  task = input.required<Task>();
   @Output() deleted = new EventEmitter<string>();
-  @Output() prorityChanged = new EventEmitter<Pick<Task, 'id' | 'priority'>>();
+  @Output() prorityChanged = new EventEmitter<Priority>();
+  @Output() statusChanged = new EventEmitter<Status>();
 
-  @ViewChild('trigger', { read: ElementRef }) trigger?: ElementRef<HTMLElement>;
-
-  constructor(private menuService: MenuService) {}
-
-  triggerMenu(): void {
-    const viewportOffset = this.trigger?.nativeElement?.getBoundingClientRect();
-    this.menuService.openMenu(this.task, {
-      top: viewportOffset?.top ?? 0,
-      left: viewportOffset?.left ?? 0,
-      right: viewportOffset?.right ?? 0,
-    });
-  }
 
   changePriority(priority: Priority): void {
     this.prorityChanged.emit({ id: this.task.id, priority });
