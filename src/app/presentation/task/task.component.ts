@@ -2,17 +2,16 @@ import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
-  ElementRef,
+  computed,
   EventEmitter,
   input,
   Output,
 } from '@angular/core';
 
-import { Priority, Task } from '@kb/core/task';
+import { Priority, Status, Statuses, Task } from '@kb/core/task';
 
 import { AuthorComponent } from './author/author.component';
 import { IconComponent } from '../icon/icon.component';
-import { MenuService } from '../menu/menu.service';
 import { PriorityComponent } from '../priority/priority.component';
 import { MenuTriggerDirective } from '../utils/menu/menu.directive';
 
@@ -30,8 +29,13 @@ export class TaskComponent {
   @Output() prorityChanged = new EventEmitter<Priority>();
   @Output() statusChanged = new EventEmitter<Status>();
 
+  availableStatuses = computed(() => Statuses.filter((status) => status !== this.task().status));
 
   changePriority(priority: Priority): void {
-    this.prorityChanged.emit({ id: this.task.id, priority });
+    this.prorityChanged.emit(priority);
+  }
+
+  changeStatus(status: Status): void {
+    this.statusChanged.emit(status);
   }
 }

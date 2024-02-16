@@ -39,7 +39,7 @@ export class TasksStore {
     return 0;
   }
 
-  changeTaskStatus(taskId: string, status: Status): void {
+  updateStatus(taskId: string, status: Status): void {
     this.tasks.update((tasks) => {
       const taskIndex = tasks.findIndex((task) => task.id === taskId);
       const [foundTask] = tasks.splice(taskIndex, 1);

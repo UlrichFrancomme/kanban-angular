@@ -1,10 +1,13 @@
-<div class="column-title">{{ status }}</div>
+<header>
+  <div class="column-title">{{ status() }}</div>
+</header>
+
 @if (!editableTaskDisplayed()) {
   <button type="button" class="add" (click)="editableTaskDisplayed.set(true)">
     + Ajouter une tâche
   </button>
 }
-<ul id="{{ status }}" cdkDropList class="tasks" (cdkDropListDropped)="drop($event)">
+<ul id="{{ status() }}" cdkDropList class="tasks" (cdkDropListDropped)="drop($event)">
   @if (editableTaskDisplayed()) {
     <li
       app-editable-task
@@ -18,7 +21,8 @@
       [task]="task"
       cdkDrag
       [cdkDragData]="task"
-      (prorityChanged)="changePriority($event)"
+      (prorityChanged)="changePriority($event, task.id)"
+      (statusChanged)="changeStatus($event, task.id)"
     ></li>
   }
 </ul>
