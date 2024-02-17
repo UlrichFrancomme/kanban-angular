@@ -38,6 +38,10 @@ header {
   padding-bottom: 15rem;
 }
 
+.cdk-drag {
+  cursor: grab;
+}
+
 .cdk-drag-preview {
   border-radius: 1rem;
   box-shadow:
