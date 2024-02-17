@@ -2,9 +2,8 @@ import { CdkDrag, CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, effect, input, model, signal } from '@angular/core';
 
-import { Priority, Status, Statuses, Task, TasksStore } from '@kb/core';
+import { Status, Statuses, Task, TasksStore } from '@kb/core';
 
-import { EditableTaskComponent } from '../editable-task/editable-task.component';
 import { IconComponent } from '../icon/icon.component';
 import { TaskComponent } from '../task/task.component';
 import { MenuItemDirective, MenuTriggerDirective } from '../utils/menu';
@@ -18,7 +17,6 @@ import { MenuItemDirective, MenuTriggerDirective } from '../utils/menu';
     CdkDrag,
     IconComponent,
     TaskComponent,
-    EditableTaskComponent,
     MenuTriggerDirective,
     MenuItemDirective,
   ],
@@ -33,7 +31,7 @@ export class ColumnComponent {
   tasks: Task[] = [];
 
   statusChoices = Statuses;
-  editableTaskDisplayed = signal(false);
+  displayTaskCreation = signal(false);
 
   constructor(private store: TasksStore) {
     effect(() => {
@@ -60,15 +58,15 @@ export class ColumnComponent {
       priority: data.priority,
     });
 
-    this.editableTaskDisplayed.set(false);
+    this.displayTaskCreation.set(false);
   }
 
-  changeStatus(status: Status) {
+  changeColumnStatus(status: Status) {
     this.status.set(status);
   }
 
-  updateTaskPriority(priority: Priority, taskId: string): void {
-    this.store.updatePriority(taskId, priority);
+  updateTask(task: Task): void {
+    this.store.updateTask(task);
   }
 
   updateTaskStatus(status: Status, taskId: string): void {

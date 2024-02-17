@@ -1,11 +1,11 @@
 import { computed, Injectable, signal, Signal } from '@angular/core';
 import { nanoid } from 'nanoid';
 
-import { Priority, Status, Task } from './task';
+import { Status, Task } from './task';
 
 @Injectable({ providedIn: 'root' })
 export class TasksStore {
-  private tasks = signal<Task[]>([]);
+  private tasks = signal<Task[]>([], { equal: (a, b) => JSON.stringify(a) === JSON.stringify(b) });
 
   selectByStatus(status: Status): Signal<Task[]> {
     return computed(() =>
@@ -72,14 +72,14 @@ export class TasksStore {
     });
   }
 
-  updatePriority(taskId: string, priority: Priority): void {
+  updateTask(task: Task): void {
     this.tasks.update((tasks) => {
-      const taskIndex = tasks.findIndex((task) => task.id === taskId);
-      const [foundTask] = tasks.splice(taskIndex, 1);
-      if (foundTask) {
-        foundTask.priority = priority;
-        return [...tasks, foundTask];
+      const taskToUpdate = tasks.find((item) => item.id === task.id);
+      if (taskToUpdate) {
+        taskToUpdate.title = task.title;
+        taskToUpdate.priority = task.priority;
       }
+
       return tasks;
     });
   }

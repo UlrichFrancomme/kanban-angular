@@ -6,35 +6,56 @@ import {
   EventEmitter,
   input,
   Output,
+  signal,
 } from '@angular/core';
 
-import { Priority, Status, Statuses, Task } from '@kb/core/task';
+import { Status, Task } from '@kb/core/task';
 
-import { AuthorComponent } from './author/author.component';
-import { IconComponent } from '../icon/icon.component';
-import { PriorityComponent } from '../priority/priority.component';
-import { MenuItemDirective, MenuTriggerDirective } from '../utils/menu';
+import { TaskCreationComponent } from './creation/task-creation.component';
+import { TaskEditionComponent } from './edition/task-edition.component';
+import { TaskReadComponent } from './read/task-read.component';
 
 @Component({
   selector: '[app-task]',
   standalone: true,
-  imports: [
-    CommonModule,
-    IconComponent,
-    PriorityComponent,
-    AuthorComponent,
-    MenuTriggerDirective,
-    MenuItemDirective,
-  ],
-  templateUrl: './task.component.html',
-  styleUrls: ['./task.component.scss'],
+  imports: [CommonModule, TaskCreationComponent, TaskEditionComponent, TaskReadComponent],
+  template: `@if (displayRead()) {
+      <app-task-read
+        [task]="task()!"
+        (edit)="enableEdition.set(true)"
+        (statusChanged)="statusChanged.emit($event)"
+        (deleted)="deleted.emit()"
+      ></app-task-read>
+    } @else if (displayEdit()) {
+      <app-task-edition
+        [task]="task()!"
+        (canceled)="enableEdition.set(false)"
+        (updated)="confirmUpdate($event)"
+      ></app-task-edition>
+    } @else {
+      <app-task-creation
+        (created)="created.emit($event)"
+        (canceled)="creationCanceled.emit()"
+      ></app-task-creation>
+    } `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TaskComponent {
-  task = input.required<Task>();
-  @Output() deleted = new EventEmitter<string>();
-  @Output() prorityChanged = new EventEmitter<Priority>();
+  @Output() created = new EventEmitter<Pick<Task, 'title' | 'priority'>>();
+  @Output() creationCanceled = new EventEmitter<void>();
+  @Output() updated = new EventEmitter<Task>();
   @Output() statusChanged = new EventEmitter<Status>();
+  @Output() deleted = new EventEmitter<void>();
 
-  availableStatuses = computed(() => Statuses.filter((status) => status !== this.task().status));
+  task = input<Task | null>();
+
+  enableEdition = signal(false);
+
+  displayRead = computed(() => !!this.task() && this.enableEdition() === false);
+  displayEdit = computed(() => !!this.task() && this.enableEdition() === true);
+
+  confirmUpdate(update: Task): void {
+    this.updated.emit(update);
+    this.enableEdition.set(false);
+  }
 }

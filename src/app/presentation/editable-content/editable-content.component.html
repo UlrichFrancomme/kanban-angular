@@ -1,9 +1,8 @@
 <div
-  #titleInput
+  #input
   class="title"
   contenteditable
   [attr.placeholder]="placeholder"
   [textContent]="content"
-  (input)="contentChanged.emit(titleInput.innerText)"
-  (keydown)="onKeydown($event)"
+  (input)="contentChanged.emit(input.innerText)"
 ></div>

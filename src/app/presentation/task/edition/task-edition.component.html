@@ -1,22 +1,18 @@
-<app-priority [priority]="priority()" (updated)="priority.set($event)"></app-priority>
+<header>
+  <app-priority [(priority)]="priority" [selectionOpened]="true"></app-priority>
+</header>
 <app-editable-content
   [placeholder]="'Entrez votre titre...'"
   [content]="title()"
   (contentChanged)="title.set($event)"
-  (enterPressed)="confirm()"
-  (escapePressed)="canceled.emit()"
 ></app-editable-content>
+<app-author [author]="task().author"></app-author>
 
 <div class="actions">
   <button type="button" class="action cancel" (click)="canceled.emit()">
     <app-icon [icon]="'close'"></app-icon>
   </button>
-  <button
-    type="button"
-    class="action confirm"
-    [disabled]="title().length === 0"
-    (click)="confirm()"
-  >
+  <button type="button" class="action confirm" (click)="confirm()">
     <app-icon [icon]="'check'"></app-icon>
   </button>
 </div>

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, model } from '@angular/core';
 
 import { Priorities, Priority } from '@kb/core';
 
@@ -12,14 +12,13 @@ import { Priorities, Priority } from '@kb/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PriorityComponent {
-  @Input({ required: true }) priority!: Priority;
-  @Output() updated = new EventEmitter<Priority>();
+  priority = model.required<Priority>();
+  selectionOpened = model(false);
 
   choices = Priorities;
-  choicesDisplayed = false;
 
-  select(choice: Priority): void {
-    this.updated.emit(choice);
-    this.choicesDisplayed = false;
+  select(priority: Priority): void {
+    this.priority.set(priority);
+    this.selectionOpened.set(false);
   }
 }

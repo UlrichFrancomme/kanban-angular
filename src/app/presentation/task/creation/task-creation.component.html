@@ -1,0 +1,20 @@
+<app-priority [(priority)]="priority" [selectionOpened]="true"></app-priority>
+<app-editable-content
+  [placeholder]="'Entrez votre titre...'"
+  [content]="title()"
+  (contentChanged)="title.set($event)"
+></app-editable-content>
+
+<div class="actions">
+  <button type="button" class="action cancel" (click)="canceled.emit()">
+    <app-icon [icon]="'close'"></app-icon>
+  </button>
+  <button
+    type="button"
+    class="action confirm"
+    [disabled]="title().length === 0"
+    (click)="confirm()"
+  >
+    <app-icon [icon]="'check'"></app-icon>
+  </button>
+</div>
