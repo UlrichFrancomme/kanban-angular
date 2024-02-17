@@ -93,7 +93,7 @@ export class MenuTriggerDirective implements OnDestroy {
     }
 
     if (enougthPlaceOnBottom) {
-      const top = isChildOfTrigger ? 0 : triggerRect.top;
+      const top = isChildOfTrigger ? trigger.offsetTop : triggerRect.top;
       this.renderer.setStyle(menu, 'top', `${top}px`);
     } else {
       const bottom = isChildOfTrigger ? 0 : viewportHeight - triggerRect.bottom;
