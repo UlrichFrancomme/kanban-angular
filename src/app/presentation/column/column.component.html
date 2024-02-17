@@ -20,7 +20,7 @@
       (canceled)="editableTaskDisplayed.set(false)"
     ></li>
   }
-  @for (task of tasks()()(); track task.id) {
+  @for (task of tasks; track task.id) {
     <li
       app-task
       [task]="task"

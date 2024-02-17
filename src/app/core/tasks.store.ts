@@ -7,13 +7,12 @@ import { Priority, Status, Task } from './task';
 export class TasksStore {
   private tasks = signal<Task[]>([]);
 
-  selectByStatus(status: Status): () => Signal<Task[]> {
-    return () =>
-      computed(() =>
-        this.tasks()
-          .filter((item) => item.status === status)
-          .toSorted(this.compareFn.bind(this)),
-      );
+  selectByStatus(status: Status): Signal<Task[]> {
+    return computed(() =>
+      this.tasks()
+        .filter((item) => item.status === status)
+        .toSorted(this.compareFn.bind(this)),
+    );
   }
 
   private compareFn(a: Task, b: Task): number {

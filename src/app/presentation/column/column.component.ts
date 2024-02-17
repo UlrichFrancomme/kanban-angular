@@ -1,6 +1,6 @@
 import { CdkDrag, CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, computed, input, model, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, input, model, signal } from '@angular/core';
 
 import { Priority, Status, Statuses, Task, TasksStore } from '@kb/core';
 
@@ -30,12 +30,16 @@ export class ColumnComponent {
   status = model.required<Status>();
   displayStatusPicker = input<boolean>(false);
 
-  tasks = computed(() => this.store.selectByStatus(this.status()));
+  tasks: Task[] = [];
 
   statusChoices = Statuses;
   editableTaskDisplayed = signal(false);
 
-  constructor(private store: TasksStore) {}
+  constructor(private store: TasksStore) {
+    effect(() => {
+      this.tasks = this.store.selectByStatus(this.status())();
+    });
+  }
 
   drop(event: CdkDragDrop<Task[], Task[], Task>): void {
     if (event.container === event.previousContainer) {
