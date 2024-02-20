@@ -1,2 +1,2 @@
 export * from './task';
-export * from './tasks.store';
+export * from './task.store';

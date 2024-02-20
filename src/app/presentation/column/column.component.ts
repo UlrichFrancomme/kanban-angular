@@ -1,8 +1,16 @@
 import { CdkDrag, CdkDragDrop, CdkDropList } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, effect, input, model, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  input,
+  model,
+  OnInit,
+  signal,
+  Signal,
+} from '@angular/core';
 
-import { Status, Statuses, Task, TasksStore } from '@kb/core';
+import { Status, Statuses, Task, TaskStore } from '@kb/core';
 
 import { IconComponent } from '../icon/icon.component';
 import { TaskComponent } from '../task/task.component';
@@ -24,26 +32,26 @@ import { MenuItemDirective, MenuTriggerDirective } from '../utils/menu';
   styleUrl: './column.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ColumnComponent {
+export class ColumnComponent implements OnInit {
   status = model.required<Status>();
   displayStatusPicker = input<boolean>(false);
 
-  tasks: Task[] = [];
+  tasks: Signal<Task[]> = signal([]);
 
   statusChoices = Statuses;
   displayTaskCreation = signal(false);
 
-  constructor(private store: TasksStore) {
-    effect(() => {
-      this.tasks = this.store.selectByStatus(this.status())();
-    });
+  constructor(private store: TaskStore) {}
+
+  ngOnInit(): void {
+    this.initializeTasksByStatus();
   }
 
   drop(event: CdkDragDrop<Task[], Task[], Task>): void {
     if (event.container === event.previousContainer) {
       return;
     }
-    this.store.updateStatus(event.item.data.id, this.status());
+    this.store.changeTaskStatus(event.item.data.id, this.status());
   }
 
   addTask(data: Pick<Task, 'title' | 'priority'>): void {
@@ -63,17 +71,22 @@ export class ColumnComponent {
 
   changeColumnStatus(status: Status) {
     this.status.set(status);
+    this.initializeTasksByStatus();
   }
 
   updateTask(task: Task): void {
-    this.store.updateTask(task);
+    this.store.updateTask(task.id, { title: task.title, priority: task.priority });
   }
 
   updateTaskStatus(status: Status, taskId: string): void {
-    this.store.updateStatus(taskId, status);
+    this.store.changeTaskStatus(taskId, status);
   }
 
   deleteTask(taskId: string): void {
     this.store.deleteTask(taskId);
+  }
+
+  private initializeTasksByStatus() {
+    this.tasks = this.store.selectByStatus(this.status());
   }
 }
