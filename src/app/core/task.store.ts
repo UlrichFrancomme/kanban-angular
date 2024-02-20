@@ -12,7 +12,6 @@ export class TaskStore {
   private filteredTasks = computed(() => {
     const filters = this.filters();
     if (filtersAreEmpty(filters)) {
-      console.log('empty')
       return this.tasks();
     }
     return this.tasks().filter((task) => {

@@ -57,7 +57,6 @@ export class TaskEditionComponent implements OnInit {
 
   @HostListener('keydown', ['$event'])
   onKeydown(event: KeyboardEvent): void {
-    console.log('keydown');
     if (event.key === 'Enter') {
       this.confirm();
     } else if (event.key === 'Escape') {

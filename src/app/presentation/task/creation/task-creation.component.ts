@@ -30,7 +30,6 @@ export class TaskCreationComponent {
   title = signal<string>('');
 
   confirm(): void {
-    console.log('confirm');
     if (this.title().length) {
       this.created.emit({ priority: this.priority(), title: this.title() });
     }
@@ -38,7 +37,6 @@ export class TaskCreationComponent {
 
   @HostListener('keydown', ['$event'])
   onKeydown(event: KeyboardEvent): void {
-    console.log('keydown');
     if (event.key === 'Enter') {
       this.confirm();
     } else if (event.key === 'Escape') {
