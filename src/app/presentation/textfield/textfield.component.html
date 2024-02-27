@@ -1,0 +1,7 @@
+@if (icon()) {
+  <app-icon [icon]="icon()!"></app-icon>
+}
+<input type="text" [value]="value()" [placeholder]="placeholder()" (change)="onChange($event)" />
+<button [class.visible]="displayClear()" (click)="clear()">
+  <app-icon icon="close"></app-icon>
+</button>

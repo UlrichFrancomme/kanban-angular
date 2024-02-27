@@ -1,0 +1,14 @@
+<app-textfield
+  [value]="title()"
+  [icon]="'search'"
+  [placeholder]="'Tapez pour rechercher'"
+  [clearable]="true"
+  (changed)="title.set($event)"
+></app-textfield>
+
+<app-dropdown
+  [value]="priorities()"
+  [placeholder]="'Filtrer par priorités...'"
+  [choices]="prioritiesChoices"
+  (changed)="priorities.set($event)"
+></app-dropdown>

@@ -15,18 +15,17 @@ export class TaskStore {
       return this.tasks();
     }
     return this.tasks().filter((task) => {
-      let isValid = false;
+      let isValid = true;
       if (filters.title?.length) {
-        isValid = task.title.includes(filters.title);
+        isValid &&= task.title.toLowerCase().includes(filters.title.toLowerCase());
       }
 
       if (filters.priorities?.length) {
-        console.log(`${filters.priorities} includes ${task.priority}`, task.id)
-        isValid = filters.priorities.includes(task.priority);
+        isValid &&= filters.priorities.includes(task.priority);
       }
 
       if (filters.authors?.length) {
-        isValid = filters.authors.includes(task.author.id);
+        isValid &&= filters.authors.includes(task.author.id);
       }
 
       return isValid;

@@ -1,0 +1,25 @@
+<div class="dropdown" (click)="isOpen.set(true)">
+  <div class="value">
+    @if (displayPlaceholder()) {
+      <p class="placeholder">{{ placeholder() }}</p>
+    } @else {
+      @for (item of selection(); track item; let index = $index) {
+        <div class="item" (click)="$event.stopPropagation()">
+          <span>{{ item?.label }}</span>
+          <button (click)="remove(index)">
+            <app-icon icon="close"></app-icon>
+          </button>
+        </div>
+      }
+    }
+  </div>
+  <app-icon class="caret" icon="caret-down"></app-icon>
+</div>
+
+@if (isOpen()) {
+  <div class="dropdown-choices" (outsideClick)="isOpen.set(false)">
+    @for (choice of choices(); track choice) {
+      <div class="dropdown-choice" (click)="select(choice.value)">{{ choice.label }}</div>
+    }
+  </div>
+}
